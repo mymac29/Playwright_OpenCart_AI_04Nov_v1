@@ -18,8 +18,8 @@ export class CartPage {
         this.cartHeading = page.locator('h1');
         this.productNameCell = page.locator('.table-bordered tbody tr td a').nth(1);
         this.quantityInput = page.locator('.table-bordered tbody input[name*="quantity"]');
-        this.unitPriceCell = page.locator('tr:has-text("MacBook") td.text-right').nth(1);
-        this.totalPriceCell = page.locator('tr:has-text("MacBook") td.text-right').nth(2);
+        this.unitPriceCell = page.locator('tr:has-text("Palm Treo Pro") td.text-right').nth(1);
+        this.totalPriceCell = page.locator('tr:has-text("Palm Treo Pro") td.text-right').nth(2);
         this.cartTotal = page.locator('.table-bordered tr:has(td:has-text("Total:")) td:last-child').last();
     }
 
@@ -74,5 +74,14 @@ export class CartPage {
      */
     async getCartTotal(): Promise<string> {
         return await this.cartTotal.textContent() ?? '';
+    }
+
+    async isProductInCart(productName: string): Promise<boolean> {
+        return await this.page.locator('.table-bordered tbody tr')
+            .filter({ hasText: productName }).count() > 0;
+    }
+
+    async getProductQuantity(): Promise<string> {
+        return await this.getQuantity();
     }
 }

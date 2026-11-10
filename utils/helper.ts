@@ -6,9 +6,9 @@ export class Helper {
 
   static getProductDetails() {
     return {
-      productName: 'MacBook',
+      productName: 'Palm Treo Pro',
       productQuantity: '1',
-      totalPrice: '$602.00'
+      totalPrice: '$337.99'
     };
   }
 

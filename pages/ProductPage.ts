@@ -16,7 +16,35 @@ export class ProductPage {
         this.productHeading = page.locator('h1');
         this.quantityInput = page.locator('#input-quantity');
         this.addToCartButton = page.getByRole('button', { name: 'Add to Cart' });
-        this.successMessage = page.locator('.alert.alert-success');
+        this.successMessage = page.getByText('Success: You have added', { exact: false });
+    }
+
+
+    async setQuantity(quantity: string | number): Promise<void> {
+        await this.quantityInput.fill(String(quantity));
+    }
+
+    async clickAddToCart(): Promise<void> {
+        this.page.once('dialog', async dialog => {
+            await dialog.accept();
+        });
+        await this.addToCartButton.click();
+    }
+
+    async isSuccessMessageVisible(): Promise<boolean> {
+        try {
+            await this.successMessage.waitFor({
+                state: 'visible',
+                timeout: 10000
+            });
+            return true;
+        } catch {
+            return false;
+        }
+    }
+
+    async getSuccessMessage(): Promise<string> {
+        return await this.successMessage.innerText();
     }
 
     /**
@@ -45,11 +73,18 @@ export class ProductPage {
      * @returns Promise<boolean> - true if the heading is visible
      */
     async isProductPageExists(): Promise<boolean> {
-        try {
-            return await this.productHeading.isVisible();
-        } catch (error) {
-            console.log(`Error checking product page: ${error}`);
-            return false;
-        }
+    try {
+        await this.productHeading.waitFor({
+            state: 'visible',
+            timeout: 10000
+        });
+        return true;
+    } catch (error) {
+        console.log('Current URL:', this.page.url());
+        console.log('H1 count:', await this.productHeading.count());
+        console.log('H1 text:', await this.productHeading.allTextContents());
+        console.log('Product page check failed:', error);
+        return false;
     }
+}
 }

@@ -23,9 +23,22 @@ export class HomePage {
         this.macBookLink = page.locator('a:has-text("MacBook")').first();
     }
 
+    async navigateTo(url: string): Promise<void> {
+        await this.page.goto(url);
+    }
+
     /**
      * Navigates directly to the Register page
      */
+
+    async clickMyAccount(): Promise<void> {
+        await this.myAccountLink.click();
+    }
+
+    async isMyAccountLinkVisible(): Promise<boolean> {
+        return await this.myAccountLink.isVisible();
+    }
+
     async clickRegister(): Promise<void> {
         await this.page.goto(`${process.env.WEB_APP_URL || 'http://localhost/opencart/upload/'}index.php?route=account/register`);
     }

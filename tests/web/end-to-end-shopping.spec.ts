@@ -21,7 +21,7 @@ import { test, expect } from '../../fixtures/pageFixtures';
 import { RandomDataUtil } from '../../utils/dataGenerator';
 import { Helper } from '../../utils/helper';
 
-test('End-to-End Shopping Flow @master @e2e @web', async ({ homePage, registerPage, successPage, myAccountPage, logoutPage, loginPage, searchResultsPage, productPage, cartPage }) => {
+test('End-to-End Shopping Flow @master @e2e @web', async ({ homePage, registerPage, registerSuccessPage, myAccountPage, logoutPage, loginPage, searchResultsPage, productPage, cartPage }) => {
     const firstName = RandomDataUtil.getFirstName();
     const lastName = RandomDataUtil.getLastName();
     const email = RandomDataUtil.getEmail();
@@ -40,9 +40,9 @@ test('End-to-End Shopping Flow @master @e2e @web', async ({ homePage, registerPa
     });
 
     await test.step('3) Verify successful registration', async () => {
-        const isSuccess = await successPage.isSuccessPageExists();
+        const isSuccess = await registerSuccessPage.isRegisterSuccessPageExists();
         expect(isSuccess).toBeTruthy();
-        await successPage.clickContinue();
+        await registerSuccessPage.clickContinue();
     });
 
     await test.step('4) Log out', async () => {

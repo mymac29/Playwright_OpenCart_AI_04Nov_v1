@@ -27,6 +27,21 @@ export class RegisterPage {
         this.continueButton = page.getByRole('button', { name: 'Continue' });
     }
 
+
+    async completeRegistration(
+        firstName: string,
+        lastName: string,
+        email: string,
+        telephone: string,
+        password: string
+    ): Promise<void> {
+        await this.registerUser(firstName, lastName, email, telephone, password);
+    }
+
+    async isRegisterPageExists(): Promise<boolean> {
+        return await this.firstNameInput.isVisible();
+    }
+
     /**
      * Fills the registration form and submits
      * @param firstName - First name

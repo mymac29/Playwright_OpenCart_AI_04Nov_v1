@@ -28,6 +28,10 @@ export class RegisterSuccessPage {
         }
     }
 
+    async getRegisterSuccessHeadingText(): Promise<string> {
+        return await this.successHeading.innerText();
+    }
+
     /**
      * Clicks the Continue button to proceed to My Account
      */

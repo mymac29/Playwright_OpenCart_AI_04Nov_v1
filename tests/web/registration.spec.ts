@@ -17,7 +17,7 @@
 import { test, expect } from '../../fixtures/pageFixtures';
 import { RandomDataUtil } from '../../utils/dataGenerator';
 
-test('User Registration Flow @master @sanity @regression @web', async ({ homePage, registerPage, successPage, myAccountPage }) => {
+test('User Registration Flow @master @sanity @regression @web', async ({ homePage, registerPage, registerSuccessPage, myAccountPage }) => {
     const firstName = RandomDataUtil.getFirstName();
     const lastName = RandomDataUtil.getLastName();
     const email = RandomDataUtil.getEmail();
@@ -43,17 +43,17 @@ test('User Registration Flow @master @sanity @regression @web', async ({ homePag
     });
 
     await test.step('5) Verify registration success', async () => {
-        const isSuccess = await successPage.isSuccessPageExists();
+        const isSuccess = await registerSuccessPage.isRegisterSuccessPageExists();
         expect(isSuccess).toBeTruthy();
     });
 
     await test.step('6) Verify the account-created confirmation heading', async () => {
-        const headingText = await successPage.getSuccessHeadingText();
+        const headingText = await registerSuccessPage.getRegisterSuccessHeadingText();
         expect(headingText).toContain('Your Account Has Been Created!');
     });
 
     await test.step('7) Navigate to My Account and verify account is accessible', async () => {
-        await successPage.clickContinue();
+        await registerSuccessPage.clickContinue();
         const isMyAccount = await myAccountPage.isMyAccountPageExists();
         expect(isMyAccount).toBeTruthy();
     });
